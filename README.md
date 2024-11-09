@@ -1,1 +1,1 @@
-# AIC_Worrier_2024
+# LAB2-AI-Fundamental

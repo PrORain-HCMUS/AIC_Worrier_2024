@@ -1,0 +1,5 @@
+3
+-B1,1 OR P1,1 OR P2,1
+-B1,1 OR P1,1 OR P1,2
+-B1,1 OR P1,1
+NO

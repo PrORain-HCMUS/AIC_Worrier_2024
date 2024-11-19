@@ -2,133 +2,158 @@ import itertools
 
 class KnowledgeBase:
     def __init__(self):
-        self.clauses = []
-        self.steps = []  # Thêm thuộc tính steps để lưu trữ các bước hợp giải
+        # Khởi tạo cơ sở dữ liệu để lưu các mệnh đề
+        self.database = []
+        # Lưu lại đường đi của quá trình hợp giải
+        self.resolution_path = []
 
-    def addClause(self, clause):
-        if clause not in self.clauses and not self.checkComplementary(clause):
-            self.clauses.append(clause)
+    def insert(self, statement):
+        # Thêm một mệnh đề mới vào cơ sở dữ liệu nếu nó chưa tồn tại và không mâu thuẫn
+        if statement not in self.database and not self.has_contradiction(statement):
+            self.database.append(statement)
 
-    def getNegative_atom(self, atom):
-        if (atom[0] == '-'):
-            return atom[1:]
+    def invert_literal(self, literal):
+        # Đảo ngược một literal (thêm hoặc bỏ dấu -)
+        if (literal[0] == '-'):
+            return literal[1:]
         else:
-            return '-' + atom
+            return '-' + literal
 
-    def getNegative_query(self, query):
-        res = []
-        for clause in query:
-            new = []
-            for atom in clause:
-                new.append([self.getNegative_atom(atom)])
-            res.append(new)
-        
-        if len(res) == 1:
-            return list(itertools.chain.from_iterable(res))
-        else:
-            return self.toCNF(res)
-
-    def check_True(self, clause, list_clauses):
-        for c in list_clauses:
-            if set(c).issubset(set(clause)):
-                return True
-        return False
-
-    def remove_eval(self, clauses):
-        res = []
-        for c in clauses:
-            if not self.check_True(c, res):
-                res.append(c)
-        return res
-
-    def toCNF(self, clauses):
-        res = []
-        product_all = list(itertools.product(*clauses))
-        for i in product_all:
-            new = self.normClause(list(itertools.chain.from_iterable(list(i))))
-            if not self.checkComplementary(new) and new not in res:
-                res.append(new)
-        res.sort(key=len)
-        res = self.remove_eval(res)
-        return res
-
-    def checkComplementary(self, clause):
-        for atom in clause:
-            if self.getNegative_atom(atom) in clause:
-                return True
-        return False
-
-    def normClause(self, clause):
-        # Remove duplicates
-        clause = list(dict.fromkeys(clause))
-
-        # Sort by alphabet
-        tuple_form = []
-        for atom in clause:
-            if atom[0] == '-':
-                tuple_form.append((atom[1], -1))
-            else:
-                tuple_form.append((atom[0], 1))
-        tuple_form.sort()
-
-        # Rebuild clause
-        res = []
-        for tup in tuple_form:
-            if tup[1] == -1:
-                res.append('-' + tup[0])
-            else:
-                res.append(tup[0])
-        return res
-
-    def resolve(self, clause_i, clause_j):
-        new_clause = []
-        for atom in clause_i:
-            neg_atom = self.getNegative_atom(atom)
-            if neg_atom in clause_j:
-                temp_c_i = clause_i.copy()
-                temp_c_j = clause_j.copy()
-                temp_c_i.remove(atom)
-                temp_c_j.remove(neg_atom)
-                if not temp_c_i and not temp_c_j:
-                    new_clause.append(['{}'])
-                else:
-                    clause = temp_c_i + temp_c_j
-                    clause = self.normClause(clause)
-                    if not self.checkComplementary(clause) and clause not in self.clauses:
-                        new_clause.append(clause)
-        return new_clause
-
-    def PL_Resolution(self, query):
-        tempKB = KnowledgeBase()
-        tempKB.clauses = self.clauses.copy()
-
-        neg_query = self.getNegative_query(query)
-        print(f"Negative query: {neg_query}")
-        for neg_atom in neg_query:
-            tempKB.addClause(neg_atom)
-        
+    def invert_expression(self, expression):
+        # Phủ định một biểu thức logic
         result = []
-        step = 1
-        while True:
-            clause_pairs = list(itertools.combinations(range(len(tempKB.clauses)), 2))
-            
-            resolvents = []
-            for pair in clause_pairs:
-                resolvent = tempKB.resolve(tempKB.clauses[pair[0]], tempKB.clauses[pair[1]])
-                if resolvent and resolvent not in resolvents:
-                    resolvents.append(resolvent)
-                    self.steps.append((tempKB.clauses[pair[0]], tempKB.clauses[pair[1]], resolvent))  # Lưu trữ các bước hợp giải
-                    print(f"Step {step}: Resolving {tempKB.clauses[pair[0]]} and {tempKB.clauses[pair[1]]} -> {resolvent}")
-                    step += 1
+        for statement in expression:
+            temp = []
+            for literal in statement:
+                temp.append([self.invert_literal(literal)])
+            result.append(temp)
+        
+        # Nếu chỉ có một mệnh đề, trả về dạng phẳng
+        if len(result) == 1:
+            return list(itertools.chain.from_iterable(result))
+        else:
+            return self.convert_to_standard_form(result)
 
-            resolvents = list(itertools.chain.from_iterable(resolvents))
-            result.append(resolvents)
+    def is_subset_exists(self, statement, statement_list):
+        # Kiểm tra xem một mệnh đề có là tập con của bất kỳ mệnh đề nào trong danh sách không
+        for existing in statement_list:
+            if set(existing).issubset(set(statement)):
+                return True
+        return False
 
-            if not resolvents:
-                return result, False
+    def eliminate_redundant(self, statements):
+        # Loại bỏ các mệnh đề dư thừa
+        output = []
+        for stmt in statements:
+            if not self.is_subset_exists(stmt, output):
+                output.append(stmt)
+        return output
+
+    def convert_to_standard_form(self, statements):
+        # Chuyển đổi các mệnh đề về dạng chuẩn CNF
+        output = []
+        # Tạo tất cả các tổ hợp có thể từ các mệnh đề
+        combinations = list(itertools.product(*statements))
+        for combo in combinations:
+            processed = self.standardize_statement(list(itertools.chain.from_iterable(list(combo))))
+            if not self.has_contradiction(processed) and processed not in output:
+                output.append(processed)
+        output.sort(key=len)
+        output = self.eliminate_redundant(output)
+        return output
+
+    def has_contradiction(self, statement):
+        # Kiểm tra xem một mệnh đề có mâu thuẫn nội tại không
+        for literal in statement:
+            if self.invert_literal(literal) in statement:
+                return True
+        return False
+
+    def standardize_statement(self, statement):
+        # Chuẩn hóa một mệnh đề bằng cách loại bỏ trùng lặp và sắp xếp
+        # Loại bỏ các literal trùng lặp
+        unique_literals = list(dict.fromkeys(statement))
+        
+        # Chuyển đổi sang dạng tuple để sắp xếp
+        formatted_literals = []
+        for literal in unique_literals:
+            if literal[0] == '-':
+                formatted_literals.append((literal[1], -1))
             else:
-                if ['{}'] in resolvents:
-                    return result, True
+                formatted_literals.append((literal[0], 1))
+        formatted_literals.sort()
+        
+        # Chuyển đổi lại về dạng chuỗi
+        result = []
+        for item in formatted_literals:
+            if item[1] == -1:
+                result.append('-' + item[0])
+            else:
+                result.append(item[0])
+        return result
+
+    def apply_resolution(self, stmt1, stmt2):
+        # Áp dụng quy tắc hợp giải trên hai mệnh đề
+        derived_statements = []
+        for literal in stmt1:
+            opposite = self.invert_literal(literal)
+            if opposite in stmt2:
+                # Tạo bản sao để không ảnh hưởng đến mệnh đề gốc
+                temp_stmt1 = stmt1.copy()
+                temp_stmt2 = stmt2.copy()
+                # Loại bỏ cặp literal đối ngẫu
+                temp_stmt1.remove(literal)
+                temp_stmt2.remove(opposite)
+                if not temp_stmt1 and not temp_stmt2:
+                    derived_statements.append(['{}'])
                 else:
-                    for res in resolvents:
-                        tempKB.addClause(res)
+                    combined = temp_stmt1 + temp_stmt2
+                    standardized = self.standardize_statement(combined)
+                    if not self.has_contradiction(standardized) and standardized not in self.database:
+                        derived_statements.append(standardized)
+        return derived_statements
+
+    def prove_by_resolution(self, target):
+        # Phương pháp chứng minh bằng hợp giải
+        # Tạo một bản sao tạm thời của cơ sở tri thức
+        temp_kb = KnowledgeBase()
+        temp_kb.database = self.database.copy()
+
+        # Phủ định mệnh đề cần chứng minh
+        negated_target = self.invert_expression(target)
+        print(f"Mệnh đề phủ định: {negated_target}")
+        for neg_stmt in negated_target:
+            temp_kb.insert(neg_stmt)
+        
+        proof_steps = []
+        step_counter = 1
+        while True:
+            # Tạo tất cả các cặp mệnh đề có thể
+            statement_pairs = list(itertools.combinations(range(len(temp_kb.database)), 2))
+            
+            # Lưu các mệnh đề mới được sinh ra từ hợp giải
+            new_statements = []
+            for pair in statement_pairs:
+                resolvent = temp_kb.apply_resolution(temp_kb.database[pair[0]], temp_kb.database[pair[1]])
+                if resolvent and resolvent not in new_statements:
+                    new_statements.append(resolvent)
+                    # Lưu lại các bước hợp giải
+                    self.resolution_path.append((temp_kb.database[pair[0]], temp_kb.database[pair[1]], resolvent))
+                    print(f"Bước {step_counter}: Hợp giải {temp_kb.database[pair[0]]} và {temp_kb.database[pair[1]]} -> {resolvent}")
+                    step_counter += 1
+
+            # Làm phẳng danh sách các mệnh đề mới
+            new_statements = list(itertools.chain.from_iterable(new_statements))
+            proof_steps.append(new_statements)
+
+            # Nếu không có mệnh đề mới nào được tạo ra
+            if not new_statements:
+                return proof_steps, False
+            else:
+                # Nếu tìm thấy mệnh đề rỗng, chứng minh thành công
+                if ['{}'] in new_statements:
+                    return proof_steps, True
+                else:
+                    # Thêm các mệnh đề mới vào cơ sở tri thức
+                    for res in new_statements:
+                        temp_kb.insert(res)

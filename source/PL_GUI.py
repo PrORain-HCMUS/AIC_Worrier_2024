@@ -4,7 +4,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backend_bases import MouseButton
-import kb 
+import KnowledgeBase as kb
 
 class ResolutionVisualizer:
     def __init__(self, master):

@@ -1,5 +1,5 @@
 import os
-import kb
+import KnowledgeBase as kb
 import re
 from typing import Tuple, List
 

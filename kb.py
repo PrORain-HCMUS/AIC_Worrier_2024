@@ -3,19 +3,17 @@ import itertools
 class KnowledgeBase:
     def __init__(self):
         self.clauses = []
-
+        self.steps = []  # Thêm thuộc tính steps để lưu trữ các bước hợp giải
 
     def addClause(self, clause):
         if clause not in self.clauses and not self.checkComplementary(clause):
             self.clauses.append(clause)
 
-
     def getNegative_atom(self, atom):
-        if atom[0] == '-':
+        if (atom[0] == '-'):
             return atom[1:]
         else:
             return '-' + atom
-
 
     def getNegative_query(self, query):
         res = []
@@ -30,21 +28,18 @@ class KnowledgeBase:
         else:
             return self.toCNF(res)
 
-
     def check_True(self, clause, list_clauses):
         for c in list_clauses:
             if set(c).issubset(set(clause)):
                 return True
         return False
 
-    
     def remove_eval(self, clauses):
         res = []
         for c in clauses:
             if not self.check_True(c, res):
                 res.append(c)
         return res
-            
 
     def toCNF(self, clauses):
         res = []
@@ -57,13 +52,11 @@ class KnowledgeBase:
         res = self.remove_eval(res)
         return res
 
-
     def checkComplementary(self, clause):
         for atom in clause:
             if self.getNegative_atom(atom) in clause:
                 return True
         return False
-
 
     def normClause(self, clause):
         # Remove duplicates
@@ -87,7 +80,6 @@ class KnowledgeBase:
                 res.append(tup[0])
         return res
 
-
     def resolve(self, clause_i, clause_j):
         new_clause = []
         for atom in clause_i:
@@ -106,17 +98,17 @@ class KnowledgeBase:
                         new_clause.append(clause)
         return new_clause
 
-
     def PL_Resolution(self, query):
         tempKB = KnowledgeBase()
         tempKB.clauses = self.clauses.copy()
 
         neg_query = self.getNegative_query(query)
-        print(neg_query)
+        print(f"Negative query: {neg_query}")
         for neg_atom in neg_query:
             tempKB.addClause(neg_atom)
         
         result = []
+        step = 1
         while True:
             clause_pairs = list(itertools.combinations(range(len(tempKB.clauses)), 2))
             
@@ -125,6 +117,9 @@ class KnowledgeBase:
                 resolvent = tempKB.resolve(tempKB.clauses[pair[0]], tempKB.clauses[pair[1]])
                 if resolvent and resolvent not in resolvents:
                     resolvents.append(resolvent)
+                    self.steps.append((tempKB.clauses[pair[0]], tempKB.clauses[pair[1]], resolvent))  # Lưu trữ các bước hợp giải
+                    print(f"Step {step}: Resolving {tempKB.clauses[pair[0]]} and {tempKB.clauses[pair[1]]} -> {resolvent}")
+                    step += 1
 
             resolvents = list(itertools.chain.from_iterable(resolvents))
             result.append(resolvents)

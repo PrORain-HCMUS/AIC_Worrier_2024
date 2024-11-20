@@ -1,0 +1,9 @@
+S
+7
+-J OR -M          # John và Mary không thể cùng đi học
+-P OR -J          # Peter không đi học khi John đi học
+-M OR P           # Nếu Mary đi học thì Peter phải đi học
+J OR M OR P OR S  # Ít nhất một người đi học
+-J OR S           # Nếu John đi học thì Sara phải đi học
+-M OR -S          # Mary và Sara không thể cùng đi học
+P OR S            # Peter hoặc Sara phải đi học

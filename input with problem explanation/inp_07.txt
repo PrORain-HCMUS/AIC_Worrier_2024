@@ -1,0 +1,13 @@
+T                              # Biến T đại diện cho tình trạng "người nông dân và các vật phẩm đã qua sông" (True)
+9  
+-W OR -G OR F                  # Sói chưa qua sông (tức là -W), Dê chưa qua sông (tức là -G), và Nông dân ở bờ ban đầu (F)
+-G OR -C OR F                  # Dê chưa qua sông (tức là -G), Bắp cải chưa qua sông (tức là -C), và Nông dân ở bờ ban đầu (F)
+F OR -W                        # Nông dân ở bờ ban đầu (F) hoặc Sói chưa qua sông (-W)
+F OR -G                        # Nông dân ở bờ ban đầu (F) hoặc Dê chưa qua sông (-G)
+F OR -C                        # Nông dân ở bờ ban đầu (F) hoặc Bắp cải chưa qua sông (-C)
+W OR G OR C                    # Sói đã qua sông (W), Dê đã qua sông (G), hoặc Bắp cải đã qua sông (C)
+-F OR -W OR -G OR -C OR T      # Nông dân ở bờ bên kia (-F), Sói chưa qua sông (-W), Dê chưa qua sông (-G), Bắp cải chưa qua sông (-C), hoặc Biến T (tình trạng thành công)
+T OR F                         # Biến T (thành công) hoặc Nông dân ở bờ ban đầu (F)
+T OR W                         # Biến T (thành công) hoặc Sói đã qua sông (W)
+T OR G                         # Biến T (thành công) hoặc Dê đã qua sông (G)
+T OR C                         # Biến T (thành công) hoặc Bắp cải đã qua sông (C)

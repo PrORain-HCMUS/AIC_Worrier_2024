@@ -1,0 +1,31 @@
+5
+J OR P OR S
+M OR P OR S
+J OR M OR P
+-J
+P
+7
+-M OR P OR S
+-J OR P OR S
+-J OR M OR S
+J OR P
+J OR -M OR P
+J OR P OR -S
+M OR P
+6
+-M OR P OR -S
+-J OR P
+-J OR -M OR S
+-J OR M
+-J OR -M OR P
+P OR -S
+5
+-J OR -M OR -S
+-J OR -S
+-J OR M OR P
+M OR P OR -S
+-J OR P OR -S
+1
+-J OR M OR -S
+0
+NO

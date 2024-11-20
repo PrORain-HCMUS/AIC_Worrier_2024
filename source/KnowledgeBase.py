@@ -142,9 +142,13 @@ class KnowledgeBase:
                     print(f"Bước {step_counter}: Hợp giải {temp_kb.database[pair[0]]} và {temp_kb.database[pair[1]]} -> {resolvent}")
                     step_counter += 1
 
+                    if ['{}'] in resolvent:
+                        return proof_steps, True
+
             # Làm phẳng danh sách các mệnh đề mới
             new_statements = list(itertools.chain.from_iterable(new_statements))
             proof_steps.append(new_statements)
+
 
             # Nếu không có mệnh đề mới nào được tạo ra
             if not new_statements:

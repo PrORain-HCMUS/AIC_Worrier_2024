@@ -1,0 +1,9 @@
+C
+7
+-C OR A           # Nếu C sai, thì A phải đúng.
+-A OR A           # A có thể đúng hoặc sai.
+-A OR -C OR -A    # Nếu A sai, thì C phải sai, hoặc A phải sai.
+-B OR -C          # Nếu B đúng, thì C phải sai.
+B OR C            # Nếu B sai, thì C phải đúng.
+-C OR B           # Nếu C sai, thì B phải đúng.
+-B OR C           # Nếu B sai, thì C phải đúng.

@@ -1,0 +1,9 @@
+S
+7
+-J OR -M         
+-P OR -J         
+-M OR P           
+J OR M OR P OR S
+-J OR S          
+-M OR -S          
+P OR S            

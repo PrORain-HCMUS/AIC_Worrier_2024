@@ -1,0 +1,13 @@
+T
+9
+-W OR -G OR F
+-G OR -C OR F
+F OR -W
+F OR -G
+F OR -C
+W OR G OR C
+-F OR -W OR -G OR -C OR T
+T OR F
+T OR W
+T OR G
+T OR C

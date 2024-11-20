@@ -1,0 +1,119 @@
+16
+-C OR -G OR T OR -W
+F OR -G OR T
+F OR T OR -W
+-C OR F OR T
+C OR F OR G
+F OR T
+C OR F OR W
+F OR G OR W
+-C OR -F OR -G OR T
+-C OR -F OR T OR -W
+-F OR -G OR T OR -W
+-C OR -F OR -G OR -W
+F
+W
+G
+C
+24
+C OR F OR -W
+C OR F OR -G
+-G OR T OR -W
+-C OR -G OR -W
+F OR -G OR W
+-C OR F OR W
+-C OR -G OR T
+-C OR F
+C OR F
+F OR G
+-C OR T OR -W
+F OR W
+C OR F OR T OR W
+C OR F OR G OR T
+F OR G OR T OR W
+-C OR -F OR T
+-F OR -G OR T
+-F OR T OR -W
+-C OR -F OR -G
+-C OR -F OR -W
+-F OR -G OR -W
+C OR F OR T
+F OR T OR W
+F OR G OR T
+40
+-C OR F OR -G
+C OR F OR -G OR T
+C OR F OR T OR -W
+-G OR -W
+F OR -G OR -W
+F OR -G OR T OR W
+-C OR F OR T OR W
+-C OR -G
+T OR -W
+-C OR -W
+-G OR T
+-C OR T
+-F OR G OR T OR W
+C OR -F OR T OR W
+C OR -F OR G OR T
+-F OR T
+-C OR -F
+-F OR -G
+-F OR -W
+F OR -G OR T OR -W
+-C OR F OR -G OR T
+-C OR F OR T OR -W
+F OR G OR T OR -W
+C OR G OR T OR -W
+C OR -G OR T OR W
+-C OR F OR G OR T
+-C OR G OR T OR W
+-C OR -G OR T OR W
+-C OR G OR T OR -W
+C OR -G OR T OR -W
+C OR T OR -W
+C OR -G OR -W
+C OR -G OR T
+-C OR F OR -W
+-G OR T OR W
+-C OR -G OR W
+-C OR T OR W
+-C OR G OR T
+G OR T OR -W
+-C OR G OR -W
+34
+-W
+-G
+-C
+C OR G OR T
+C OR T OR W
+G OR T OR W
+-F OR G OR W
+C OR -F OR W
+C OR -F OR G
+T
+C OR T
+G OR T
+-F
+F OR G OR -W
+C OR G OR -W
+C OR -G OR W
+-C OR F OR G
+-C OR G OR W
+C OR -W
+C OR -G
+-G OR W
+-C OR W
+-C OR G
+G OR -W
+C OR G OR T OR W
+-C OR -F OR T OR W
+-F OR -G OR T OR W
+-C OR -F OR G OR T
+-F OR G OR T OR -W
+C OR -F OR -G OR T
+C OR -F OR T OR -W
+-F OR T OR W
+-F OR G OR T
+C OR -F OR T
+YES

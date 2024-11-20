@@ -31,4 +31,7 @@ A OR Z
 C
 B
 A
+2
+Z
+{}
 YES

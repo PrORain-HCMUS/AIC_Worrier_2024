@@ -42,7 +42,7 @@ class LogicResolver:
         except Exception as e:
             raise Exception(f"Lỗi khi đọc file {filepath}: {str(e)}")
 
-    def _write_result(self, result: List, is_proved: bool, filepath: str) -> None:
+    def _write_result(self, result: List[List[str]], is_proved: bool, filepath: str) -> None:
         """
         Ghi kết quả ra file output
         """
@@ -50,11 +50,14 @@ class LogicResolver:
             with open(filepath, 'w', encoding='utf-8') as f:
                 # Ghi từng bước hợp giải
                 for step_results in result:
+                    # Ghi số lượng mệnh đề trong bước
                     f.write(f"{len(step_results)}\n")
+                    
+                    # Ghi từng mệnh đề
                     for clause in step_results:
                         clause_str = ' OR '.join(clause)
                         f.write(f"{clause_str}\n")
-                
+                    
                 # Ghi kết quả cuối cùng
                 f.write('YES' if is_proved else 'NO')
         except Exception as e:

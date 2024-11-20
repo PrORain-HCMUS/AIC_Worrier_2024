@@ -7,4 +7,16 @@ A OR -B
 -B
 B
 C
+11
+B OR -C
+A
+-A OR B OR -C
+-A OR B OR -C
+-A OR -B OR -C
+-A OR -B OR -C
+-A
+A OR -C
+A OR C
+-A OR C
+{}
 YES

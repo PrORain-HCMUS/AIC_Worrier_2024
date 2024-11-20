@@ -8,4 +8,13 @@ B OR C OR D
 D
 -A
 A OR C OR D
+8
+-B
+C OR D
+-A OR -B OR D
+-C
+-A OR B OR D
+B OR C
+{}
+A OR -B OR D
 YES

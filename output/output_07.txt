@@ -116,4 +116,19 @@ C OR -F OR T OR -W
 -F OR T OR W
 -F OR G OR T
 C OR -F OR T
+14
+C OR G
+C OR W
+G OR W
+{}
+C OR G OR W
+-C OR -F OR W
+-F OR -G OR W
+-C OR -F OR G
+-F OR G OR -W
+C OR -F OR -G
+C OR -F OR -W
+-F OR W
+-F OR G
+C OR -F
 YES

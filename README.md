@@ -79,6 +79,42 @@ Here's the pseudo code and one of the practical applications of the algorithm:
 
 ![Figure 1: Pseudo code and application.](img/algorithm.png)
 
+## Advanced (or Additional) features
+In the spirit of thinking out of the box, and in order to gain a better overview at this Lab, I have also prepared some adđitional features as shown below
+
+### Real-problem Input
+So basically I've transformed some iconic, or at least well-known logic problems that can be solved by Propositional Logic into CNF and hoped my algorithm could figure out a way to complete them. And fortunately it did! 
+
+For example, this is the **Wolf-Goat-Cabbage River Crossing Riddle**, a classic problem from the 9th century. The problem is stated as follows:
+
+```bash
+A farmer wants to cross a river with a wolf, a goat, and a cabbage. The farmer has a small boat that can carry himself along with only one of the three items: the wolf, the goat, or the cabbage. The challenge lies in ensuring that:
+
+- If the wolf and the goat are left together on a riverbank, the wolf will eat the goat.
+- If the goat and the cabbage are left together on a riverbank, the goat will eat the cabbage.
+
+The task is to find a way for the farmer to transport the wolf, the goat, and the cabbage across the river safely.
+
+```
+Here's how I tranform the problem above into CNF:
+```bash
+T                              # T represents the state where "the farmer and all items have successfully crossed the river" (True)
+9 
+-W OR -G OR F                  # The wolf (-W) and the goat (-G) are not both on the starting bank unless the farmer (F) is also there.
+-G OR -C OR F                  # The goat (-G) and the cabbage (-C) are not both on the starting bank unless the farmer (F) is also there.
+F OR -W                        # Either the farmer (F) is on the starting bank or the wolf (-W) is not on the starting bank.
+F OR -G                        # Either the farmer (F) is on the starting bank or the goat (-G) is not on the starting bank.
+F OR -C                        # Either the farmer (F) is on the starting bank or the cabbage (-C) is not on the starting bank.
+W OR G OR C                    # Either the wolf (W), the goat (G), or the cabbage (C) has crossed the river.
+-F OR -W OR -G OR -C OR T      # Either the farmer (-F) is on the opposite bank, or the wolf (-W), the goat (-G), and the cabbage (-C) are not on the starting bank, or the success state (T) is reached.
+T OR F                         # Either the success state (T) is reached or the farmer (F) is on the starting bank.
+T OR W                         # Either the success state (T) is reached or the wolf (W) has crossed the river.
+T OR G                         # Either the success state (T) is reached or the goat (G) has crossed the river.
+T OR C                         # Either the success state (T) is reached or the cabbage (C) has crossed the river.
+
+```
+
+
 ## Installation
 
 To run this project, follow the steps below to set up the environment and install the necessary dependencies.

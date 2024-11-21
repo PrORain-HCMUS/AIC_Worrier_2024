@@ -32,10 +32,10 @@ class KnowledgeBase:
         if len(result) == 1:
             return list(itertools.chain.from_iterable(result))
         else:
-            return self.convert_to_standard_form(result)
+            return self(result)
 
     def is_subset_exists(self, statement, statement_list):
-        # Kiểm tra xem một mệnh đề có là tập con của bất kỳ mệnh đề nào trong danh sách không
+        # Kiểm tra xem một mệnh đề có là tập con của bất kỳ mệnh đề nào trong list không
         for existing in statement_list:
             if set(existing).issubset(set(statement)):
                 return True
@@ -49,21 +49,8 @@ class KnowledgeBase:
                 output.append(stmt)
         return output
 
-    def convert_to_standard_form(self, statements):
-        # Chuyển đổi các mệnh đề về dạng chuẩn CNF
-        output = []
-        # Tạo tất cả các tổ hợp có thể từ các mệnh đề
-        combinations = list(itertools.product(*statements))
-        for combo in combinations:
-            processed = self.standardize_statement(list(itertools.chain.from_iterable(list(combo))))
-            if not self.has_contradiction(processed) and processed not in output:
-                output.append(processed)
-        output.sort(key=len)
-        output = self.eliminate_redundant(output)
-        return output
-
     def has_contradiction(self, statement):
-        # Kiểm tra xem một mệnh đề có mâu thuẫn nội tại không
+        # Kiểm tra xem một mệnh đề có mâu thuẫn trong KB không
         for literal in statement:
             if self.invert_literal(literal) in statement:
                 return True

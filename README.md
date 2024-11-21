@@ -49,7 +49,35 @@ YES
 - Positive literals are represented by uppercase single characters (`A`-`Z`). Negative literals are represented by a minus sign (`-`) immediately preceding the character.
 - The keyword `OR` connects literals within a clause. There may be one or more spaces between literals and the `OR` keyword.
 
+## Algorithm
+The **Propositional Logic Resolution** algorithm works as follows:
 
+1. **Negate the Target Statement**:
+   - Convert the negation of the target statement (α) into Conjunctive Normal Form (CNF).
+
+2. **Initialize the Knowledge Base (KB)**:
+   - Add all negated target clauses to the KB if they don't already exist.
+
+3. **Resolution Loop**:
+   - Generate all pairs of clauses from the current KB.
+   - For each pair of clauses, apply the resolution rule:
+     1. Find complementary literals between the two clauses.
+     2. Combine the remaining literals of both clauses into a **resolvent**.
+     3. Simplify and standardize the resolvent (e.g., sort literals, remove duplicates).
+     4. Check for contradictions (e.g., if the resolvent contains both a literal and its negation).
+     5. If the resolvent is empty (`{}`), the proof is complete.
+   - Add all new resolvents to the KB, ensuring no duplicates or redundancies.
+
+4. **Termination**:
+   - If the empty clause (`{}`) is generated, the target is entailed by the KB (**output YES**).
+   - If no new clauses can be generated, the target is not entailed by the KB (**output NO**).
+
+5. **Return the Proof Steps and Result**:
+   - Maintain a list of all generated clauses and the reasoning steps for debugging or explanation.
+
+Here's the pseudo code and one of the practical applications of the algorithm:
+
+![Figure 1: Pseudo code and application.](img/algorithm.png)
 
 ## Installation
 

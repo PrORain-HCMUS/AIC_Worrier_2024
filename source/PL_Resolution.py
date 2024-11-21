@@ -1,6 +1,7 @@
 import os
 import KnowledgeBase as kb
 import re
+import time
 from typing import Tuple, List
 
 
@@ -85,12 +86,15 @@ class LogicResolver:
 
     def process_single_file(self, input_filename: str) -> None:
         """
-        Xử lý một file input đơn lẻ
+        Xử lý một file input đơn lẻ và đo thời gian xử lý
         """
         try:
             # Đường dẫn đầy đủ cho input và output
             input_path = os.path.join(self.input_dir, input_filename)
             output_path = os.path.join(self.output_dir, self._generate_output_filename(input_filename))
+
+            # Bắt đầu tính thời gian
+            start_time = time.time()
 
             # Đọc và xử lý file
             knowledge_base, query = self._read_file(input_path)
@@ -100,8 +104,13 @@ class LogicResolver:
             
             # Ghi kết quả
             self._write_result(result, is_proved, output_path)
+
+            # Kết thúc tính thời gian
+            end_time = time.time()
             
-            print(f"Đã xử lý thành công file {input_filename}")
+            # Tính toán thời gian chạy
+            elapsed_time = end_time - start_time
+            print(f"Đã xử lý thành công file {input_filename} trong {elapsed_time:.7f} giây")
             
         except Exception as e:
             print(f"Lỗi khi xử lý file {input_filename}: {str(e)}")

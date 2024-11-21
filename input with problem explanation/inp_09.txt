@@ -1,4 +1,4 @@
-C
+C                 # C đúng
 7
 -C OR A           # Nếu C sai, thì A phải đúng.
 -A OR A           # A có thể đúng hoặc sai.

@@ -1,13 +1,12 @@
-4
-A OR -C OR D
-A OR B OR D
-A OR C
-C
-3
-B OR D
-A OR D
-A OR B OR C
-1
-B OR C
+6
+Y OR Z
+X OR Y
+Z
+-X OR -Y
+-X OR Z
+-Y OR Z
+2
+Y OR -Z
+Y
 0
 NO

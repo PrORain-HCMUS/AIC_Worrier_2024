@@ -153,10 +153,7 @@ class KnowledgeBase:
                     for res in new_statements:
                         temp_kb.insert(res)
 
-
-#--------------------------------Các phương thức bổ sung để cải tiến thuật toán---------------------------------
-
-    # Các phương thức cho chaining và heuristic
+    # Các phương thức mới cho chaining và heuristic
     def add_fact(self, fact):
         """
         Thêm một sự kiện mới vào cơ sở tri thức

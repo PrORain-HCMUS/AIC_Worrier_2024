@@ -167,6 +167,7 @@ In the workspace window, you can observe three main components:
 
 In addition to manually adjusting the graph nodes using drag-and-drop actions, a notable feature has been added to enhance the user's experience: **Smart Positioning**. This feature automatically generates the graph using different layouts, making it easier to visualize and follow the resolution process. The available layouts are:
 
+```bash
 - **Spring**: A spring layout where nodes push/pull each other as if connected by springs.
 - **Hierarchical**: A hierarchical layout that organizes nodes in a tree-like structure.
 - **Circular**: A circular layout where nodes are arranged in a circular formation.
@@ -175,6 +176,8 @@ In addition to manually adjusting the graph nodes using drag-and-drop actions, a
 - **Random**: A random layout where nodes are placed randomly.
 - **Spectral**: A spectral layout that uses the eigenvectors of the Laplacian matrix for node placement.
 - **Planar**: A planar layout that attempts to draw the graph without any edge crossings if possible.
+
+```
 
 Initially, after browsing an input file and plotting the graph, the graph is automatically generated using the **Spring layout**. However, this does not always result in a clear, readable graph, as nodes, edges, and labels may overlap. To improve visualization, alternative layouts are provided to better organize the graph.
 

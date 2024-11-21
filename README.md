@@ -88,7 +88,8 @@ So basically I've transformed some iconic, or at least well-known logic problems
 For example, this is the **Wolf-Goat-Cabbage River Crossing Riddle**, a classic problem from the 9th century. The problem is stated as follows:
 
 ```bash
-A farmer wants to cross a river with a wolf, a goat, and a cabbage. The farmer has a small boat that can carry himself along with only one of the three items: the wolf, the goat, or the cabbage. The challenge lies in ensuring that:
+A farmer wants to cross a river with a wolf, a goat, and a cabbage. The farmer has a small boat that 
+can carry himself along with only one of the three items: the wolf, the goat, or the cabbage. The challenge lies in ensuring that:
 
 - If the wolf and the goat are left together on a riverbank, the wolf will eat the goat.
 - If the goat and the cabbage are left together on a riverbank, the goat will eat the cabbage.
@@ -114,6 +115,74 @@ T OR C                         # Either the success state (T) is reached or the 
 
 ```
 
+### GUI (Graphical User Interface)
+![Figure 2: Home workspace](img/home_gui.png)
+For better visualization of problems in PL Resolution, I also developed a GUI that allows users to plot graphs from inputs, manipulate any movements with the graphs and so on.  
+
+#### Main Components of the Workspace
+In the workspace window, you can observe three main components:
+
+1. **Graph Visualization**  
+   Displays the resolution graph, allowing the user to visualize the logical steps of the resolution process.
+
+2. **Text Log**  
+   Shows the detailed resolution steps, providing insight and updates on the progress of the resolution.
+
+3. **Tools**  
+   The tools section includes three sub-components:
+   - **Browse Input File**  
+     Allows the user to browse and select the input file for loading the knowledge base and query.
+   - **Plot Graph**  
+     Generates the resolution graph for visualization.
+   - **Smart Positioning**  
+     Enables intelligent positioning of the graph nodes for a clearer and more organized layout.
+
+#### Features
+1. **Select Input File**  
+   Allows the user to choose a text file from the system to load the knowledge base and query. This feature is represented by the method: `browse_file`.
+
+2. **Read Knowledge Base**  
+   Reads and analyzes the statements from the selected file, initializing the `KnowledgeBase` object. This feature is represented by the method: `read_knowledge_base`.
+
+3. **Draw Resolution Graph**  
+   Draws a graph representing the resolution steps, using the `networkx` and `matplotlib` libraries. This feature is represented by the method: `plot_graph`.
+
+4. **Update Graph Layout**  
+   Updates the graph layout when changed, allowing users to select different graph display types. This feature is represented by the method: `update_layout`.
+
+5. **Node Positioning and Movement**  
+   Returns the positions of nodes in the graph according to the selected layout.  
+   - Handles mouse click events to select nodes in the graph, represented by the method: `on_click`.  
+   - Handles mouse drag events to move nodes in the graph, represented by the method: `on_motion`.  
+   - Handles mouse release events to complete the drag-and-drop action for nodes, represented by the method: `on_release`.
+
+6. **Display Resolution Steps**  
+   Displays the resolution steps in a `Text` widget, providing detailed information to the user. This feature is represented by the method: `steps_text`.
+
+7. **Draw Graph on Canvas**  
+   Draws the graph on the main canvas in the application window, allowing interaction with the graph. This feature is represented by the method: `canvas`.
+
+
+### Smart Positioning and Layout Options
+
+In addition to manually adjusting the graph nodes using drag-and-drop actions, a notable feature has been added to enhance the user's experience: **Smart Positioning**. This feature automatically generates the graph using different layouts, making it easier to visualize and follow the resolution process. The available layouts are:
+
+- **Spring**: A spring layout where nodes push/pull each other as if connected by springs.
+- **Hierarchical**: A hierarchical layout that organizes nodes in a tree-like structure.
+- **Circular**: A circular layout where nodes are arranged in a circular formation.
+- **Shell**: A shell layout where nodes are arranged in concentric layers.
+- **Spiral**: A spiral layout where nodes are positioned in a spiral pattern.
+- **Random**: A random layout where nodes are placed randomly.
+- **Spectral**: A spectral layout that uses the eigenvectors of the Laplacian matrix for node placement.
+- **Planar**: A planar layout that attempts to draw the graph without any edge crossings if possible.
+
+Initially, after browsing an input file and plotting the graph, the graph is automatically generated using the **Spring layout**. However, this does not always result in a clear, readable graph, as nodes, edges, and labels may overlap. To improve visualization, alternative layouts are provided to better organize the graph.
+
+Below are two images illustrating how different layouts can make the graph more readable by ensuring that edges do not intersect. (Note: Manual adjustments may still be necessary to further space out the nodes.)
+
+![Figure 3: Spectral layout.](img/input_0_spectral.png)
+
+![Figure 4: Planar layout.](img/input_0_planar.png)
 
 ## Installation
 
